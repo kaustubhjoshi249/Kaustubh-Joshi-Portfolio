@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaustubh Joshi | Architect of Assured Realities</title>
+    
+    <!-- Chosen Palette: Refined Dark Mode (Near-Black, Off-White, Soft Teal) -->
+    <!-- Application Structure Plan: A single-page narrative flow designed to guide recruiters. It starts with a high-impact visual hero section to grab attention, followed by a narrative "About Me" that synthesizes diverse skills (AR/VR, QA, Psychology). This is followed by tangible proof: a project showcase, a skills matrix for quick scanning, and verifiable credentials. The flow is logical, moving from broad impression to specific details, ending with a clear call-to-action (Contact/Resume). This structure is chosen over a simple list to tell a compelling story of a unique, multi-talented engineer, maximizing engagement. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Portfolio Video -> Goal: Impress/Engage -> Viz: HTML5 Video Background -> Interaction: Autoplay -> Justification: Creates a dynamic, high-impact first impression.
+        - Report Info: Project List -> Goal: Inform/Prove -> Viz: HTML/Tailwind CSS Card Grid -> Interaction: Hover effects, GitHub links -> Justification: Modern, scannable, and organized display of work.
+        - Report Info: PDF Certificates -> Goal: Validate/Build Trust -> Viz: HTML/Tailwind CSS Card Grid -> Interaction: Click to open PDF -> Justification: Provides easily verifiable proof of qualifications.
+        - Report Info: Skills List -> Goal: Inform/Keyword Match -> Viz: Styled HTML Tags -> Interaction: Static -> Justification: Allows technical recruiters to quickly scan for relevant skills.
+        - Library/Method: Vanilla JS for interactions, Tailwind CSS for styling.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            background-color: #0A0A0A;
+            color: #EAEAEA;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        .font-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translateX(-50%) translateY(-50%);
+            background-size: cover;
+            object-fit: cover;
+        }
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .teal-glow {
+            box-shadow: 0 0 15px rgba(45, 212, 191, 0.3), 0 0 5px rgba(45, 212, 191, 0.2);
+        }
+        .teal-text-glow {
+            text-shadow: 0 0 8px rgba(45, 212, 191, 0.7);
+        }
+        .aspect-w-16 { position: relative; padding-bottom: 56.25%; }
+        .aspect-w-16 > * { position: absolute; height: 100%; width: 100%; top: 0; left: 0; }
+        /* Custom teal color */
+        .bg-custom-teal { background-color: #2DD4BF; }
+        .text-custom-teal { color: #2DD4BF; }
+        .border-custom-teal { border-color: #2DD4BF; }
+        .hover\:bg-custom-teal:hover { background-color: #2DD4BF; }
+        .hover\:text-custom-teal:hover { color: #2DD4BF; }
+        .focus\:ring-custom-teal:focus { --tw-ring-color: #2DD4BF; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md transition-all duration-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold font-grotesk text-white tracking-tighter" aria-label="Home">
+                KJ
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="text-gray-300 hover:text-custom-teal transition-colors">About</a>
+                <a href="#projects" class="text-gray-300 hover:text-custom-teal transition-colors">Projects</a>
+                <a href="#credentials" class="text-gray-300 hover:text-custom-teal transition-colors">Credentials</a>
+                <a href="#contact" class="text-gray-300 hover:text-custom-teal transition-colors">Contact</a>
+            </nav>
+            <a href="assets/resume.pdf" download="Kaustubh_Joshi_Resume.pdf" class="hidden md:inline-block px-5 py-2 border border-custom-teal text-custom-teal rounded-full hover:bg-custom-teal hover:text-black transition-all duration-300 font-medium">
+                Resume
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-white">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/80 backdrop-blur-lg">
+            <a href="#about" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">About</a>
+            <a href="#projects" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Projects</a>
+            <a href="#credentials" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Credentials</a>
+            <a href="#contact" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Contact</a>
+            <a href="assets/resume.pdf" download="Kaustubh_Joshi_Resume.pdf" class="block text-center py-4 text-custom-teal font-semibold">Download Resume</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
+            <video autoplay loop muted playsinline class="bg-video">
+                <source src="assets/Porfolio.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="absolute inset-0 bg-black/60"></div>
+            <div class="relative z-10 p-8">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold font-grotesk uppercase tracking-tight">
+                    Kaustubh Joshi
+                </h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-300 font-medium tracking-wider">
+                    Manual Tester | Automation Tester | Quality Engineer
+                </p>
+                <a href="#about" class="mt-8 inline-block px-10 py-4 bg-custom-teal text-black font-bold rounded-full hover:bg-white transition-colors duration-300 teal-glow">
+                    Discover My Work
+                </a>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-20 md:py-32 bg-[#0A0A0A] section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold font-grotesk text-white">Architect of <span class="text-custom-teal teal-text-glow">Assured Realities</span></h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">I architect reliable, human-centric digital experiences by blending rigorous quality assurance with innovative AR/VR and AI development.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="max-w-md mx-auto">
+                        <img src="assets/images/profile.jpg" alt="Kaustubh Joshi Profile Photo" class="rounded-full border-4 border-gray-800 shadow-2xl">
+                    </div>
+                    <div>
+                        <p class="text-lg text-gray-300 mb-6">
+                            With over four years of hands-on experience, I specialize in bridging the gap between cutting-edge technology and user-centric design. My journey began with a formal education in Game Design, which I leveraged into a professional Unity AR/VR development role, building complex interactive simulations.
+                        </p>
+                        <p class="text-lg text-gray-300 mb-6">
+                            To create experiences that are not just functional but truly resonant, I studied Social Psychology. This unique lens allows me to approach development with a deep understanding of user perception and engagement.
+                        </p>
+                        <p class="text-lg text-gray-300 mb-8">
+                            This creative foundation is anchored by a robust background in both manual and automation QA. I ensure that every project—from GenAI tools to immersive games—is polished, performant, and reliable.
+                        </p>
+                        <h3 class="text-2xl font-bold font-grotesk text-white mb-4">Core Toolkit</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-gray-800 text-custom-teal text-sm font-medium px-4 py-2 rounded-full">Unity</span>
+                            <span class="bg-gray-800 text-custom-teal text-sm font-medium px-4 py-2 rounded-full">Python</span>
+                            <span class="bg-gray-800 text-custom-teal text-sm font-medium px-4 py-2 rounded-full">Selenium</span>
+                            <span class="bg-gray-800 text-custom-teal text-sm font-medium px-4 py-2 rounded-full">Postman</span>
+                            <span class="bg-gray-800 text-custom-teal text-sm font-medium px-4 py-2 rounded-full">Tailwind CSS</span>
+                            <span class="bg-gray-800 text-custom-teal text-sm font-medium px-4 py-2 rounded-full">Git & GitHub</span>
+                            <span class="bg-gray-800 text-custom-teal text-sm font-medium px-4 py-2 rounded-full">Jupyter</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Showcase Section -->
+        <section id="projects" class="py-20 md:py-32 bg-black section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold font-grotesk text-white">Project Showcase</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">This is where ideas become reality. Below are selected projects that demonstrate my skills in AR/VR development, AI/ML implementation, and QA automation.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Card 1 -->
+                    <div class="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/171717/2DD4BF?text=AR+Fire+Drill" alt="Unity Fire Drill Simulation" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-grotesk text-custom-teal mb-2">Unity Fire Drill Simulation (AR)</h3>
+                            <p class="text-gray-400 mb-4 text-sm">An augmented reality training application that overlays fire safety procedures and extinguisher usage in a real-world environment.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Unity</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">C#</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">AR Foundation</span>
+                            </div>
+                            <a href="#" class="text-custom-teal font-semibold inline-flex items-center">View on GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/171717/2DD4BF?text=VR+Coin+Collector" alt="Unity Coin Collector Game" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-grotesk text-custom-teal mb-2">Unity Coin Collector Game (VR)</h3>
+                            <p class="text-gray-400 mb-4 text-sm">A fully immersive virtual reality game where players navigate a maze to collect coins, built for Oculus Quest.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Unity</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">C#</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Oculus SDK</span>
+                            </div>
+                            <a href="#" class="text-custom-teal font-semibold inline-flex items-center">View on GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Project Card 3 -->
+                    <div class="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/171717/2DD4BF?text=GenAI+Summarizer" alt="GenAI CLI Bug Summarizer" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-grotesk text-custom-teal mb-2">GenAI CLI Bug Summarizer</h3>
+                            <p class="text-gray-400 mb-4 text-sm">A command-line tool that uses a large language model to automatically summarize complex bug reports into concise, actionable insights.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Python</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">OpenAI API</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">CLI</span>
+                            </div>
+                            <a href="#" class="text-custom-teal font-semibold inline-flex items-center">View on GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Project Card 4 -->
+                    <div class="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/171717/2DD4BF?text=AI+Bug+Prioritizer" alt="AI Bug Prioritizer" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-grotesk text-custom-teal mb-2">AI Bug Prioritizer</h3>
+                            <p class="text-gray-400 mb-4 text-sm">A Jupyter notebook project that uses machine learning to predict the priority of new bug tickets based on historical data.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Python</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Scikit-learn</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Pandas</span>
+                            </div>
+                            <a href="#" class="text-custom-teal font-semibold inline-flex items-center">View on GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Project Card 5 -->
+                    <div class="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/171717/2DD4BF?text=Selenium+Suite" alt="Selenium Automation Test Suite" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-grotesk text-custom-teal mb-2">Selenium Automation Suite</h3>
+                            <p class="text-gray-400 mb-4 text-sm">A comprehensive test automation framework for a web application, covering regression, smoke, and sanity testing scenarios.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Java</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Selenium</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">TestNG</span>
+                            </div>
+                            <a href="#" class="text-custom-teal font-semibold inline-flex items-center">View on GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                    <!-- Project Card 6 -->
+                    <div class="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/171717/2DD4BF?text=Postman+API+Tests" alt="Postman API Test Suite" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold font-grotesk text-custom-teal mb-2">Postman API Test Suite</h3>
+                            <p class="text-gray-400 mb-4 text-sm">A collection of API tests for a RESTful service, including contract, integration, and end-to-end tests run via Newman CLI.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Postman</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">JavaScript</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">CI/CD</span>
+                            </div>
+                            <a href="#" class="text-custom-teal font-semibold inline-flex items-center">View on GitHub <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gameplay Demo Section -->
+        <section id="gameplay-demo" class="py-20 md:py-32 bg-[#0A0A0A] section-fade-in">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold font-grotesk text-white">Gameplay Demo</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">This section contains a direct capture of gameplay from one of my Unity projects, demonstrating the final, polished user experience, fluidity of controls, and overall game feel.</p>
+                </div>
+                <div class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto rounded-lg overflow-hidden border-2 border-gray-800 shadow-2xl">
+                    <video controls class="w-full h-full">
+                        <source src="assets/Porfolio.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Credentials Section -->
+        <section id="credentials" class="py-20 md:py-32 bg-black section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold font-grotesk text-white">Credentials & Certifications</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Continuous learning is a core part of my professional philosophy. The following credentials represent formal validation of my skills and experience.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <a href="assets/Anibrain school of media and design certificate of game design and development.pdf" target="_blank" class="block bg-gray-900 p-6 rounded-lg border border-gray-800 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <i data-lucide="award" class="w-12 h-12 mx-auto text-custom-teal"></i>
+                        <h3 class="mt-4 text-lg font-bold font-grotesk text-white">Game Design & Development</h3>
+                        <p class="mt-1 text-sm text-gray-400">Anibrain School of Media & Design</p>
+                    </a>
+                    <a href="assets/Internship Certificate.pdf" target="_blank" class="block bg-gray-900 p-6 rounded-lg border border-gray-800 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <i data-lucide="file-text" class="w-12 h-12 mx-auto text-custom-teal"></i>
+                        <h3 class="mt-4 text-lg font-bold font-grotesk text-white">Unity Developer Internship</h3>
+                        <p class="mt-1 text-sm text-gray-400">Ceryx Digital Private Limited</p>
+                    </a>
+                    <a href="assets/The Complete Java Certification Course.pdf" target="_blank" class="block bg-gray-900 p-6 rounded-lg border border-gray-800 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <i data-lucide="braces" class="w-12 h-12 mx-auto text-custom-teal"></i>
+                        <h3 class="mt-4 text-lg font-bold font-grotesk text-white">The Complete Java Course</h3>
+                        <p class="mt-1 text-sm text-gray-400">Udemy</p>
+                    </a>
+                    <a href="assets/learn social psychology fundamentals.pdf" target="_blank" class="block bg-gray-900 p-6 rounded-lg border border-gray-800 text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <i data-lucide="users" class="w-12 h-12 mx-auto text-custom-teal"></i>
+                        <h3 class="mt-4 text-lg font-bold font-grotesk text-white">Social Psychology Fundamentals</h3>
+                        <p class="mt-1 text-sm text-gray-400">Udemy</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 md:py-32 bg-[#0A0A0A] section-fade-in">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold font-grotesk text-white">Get In Touch</h2>
+                <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">I'm currently open to new opportunities and collaborations. If you have a project in mind or would like to connect, please feel free to reach out.</p>
+                
+                <div class="mt-12 max-w-lg mx-auto">
+                    <form action="mailto:kaustubh.joshi.work@email.com" method="post" enctype="text/plain">
+                        <div class="mb-4">
+                            <input type="text" name="name" placeholder="Your Name" class="w-full bg-gray-900 border border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-custom-teal" required>
+                        </div>
+                        <div class="mb-4">
+                            <input type="email" name="email" placeholder="Your Email" class="w-full bg-gray-900 border border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-custom-teal" required>
+                        </div>
+                        <div class="mb-6">
+                            <textarea name="message" placeholder="Your Message" rows="5" class="w-full bg-gray-900 border border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-custom-teal" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-10 py-4 bg-custom-teal text-black font-bold rounded-full hover:bg-white transition-colors duration-300 teal-glow">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="hover:text-custom-teal transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
+                <a href="#" class="hover:text-custom-teal transition-colors"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+            </div>
+            <a href="assets/resume.pdf" download="Kaustubh_Joshi_Resume.pdf" class="mb-6 inline-block text-gray-400 hover:text-custom-teal transition-colors">Download My Resume</a>
+            <p>&copy; 2024 Kaustubh Joshi. All Rights Reserved.</p>
+            <p class="text-xs mt-2">Hand-built with passion and code.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('py-2');
+                header.classList.remove('py-3');
+            } else {
+                header.classList.add('py-3');
+                header.classList.remove('py-2');
+            }
+        });
+
+        // Section fade-in on scroll
+        const sections = document.querySelectorAll('.section-fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
