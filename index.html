@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaustubh Joshi | Architect of Assured Realities</title>
+    <title>Kaustubh Joshi | Quality Engineer</title>
     
-    <!-- Fix (SEO): Added meta description -->
     <meta name="description" content="The professional portfolio for Kaustubh Joshi, an experienced QA Engineer and AR/VR Developer specializing in automation and AI-powered tools.">
-
-    <!-- Strategy: This page implements the "Architect of Assured Realities" brand identity. -->
-    <!-- UX/UI: Dark mode with a near-black (#0A0A0A) base and neon teal (#00F5D4) accent. -->
-    <!-- Typography: Space Grotesk for headings, Inter for body text. -->
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- Fix (Performance): Added defer to all external scripts to prevent render-blocking -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
@@ -38,7 +32,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Behind content */
+            z-index: 0;
         }
         header, main, footer {
             position: relative;
@@ -77,7 +71,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        /* Fix (UI/UX): Blinking cursor for live log */
         #live-log-cursor {
             display: inline-block;
             background-color: #EAEAEA;
@@ -104,6 +97,7 @@
             <nav id="main-nav" class="hidden md:flex space-x-8 items-center">
                 <a href="#about" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">About</a>
                 <a href="#projects" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Projects</a>
+                <a href="#gameplay" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Gameplay</a>
                 <a href="#ai-architect" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">AI Architect</a>
                 <a href="#automation" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Automation</a>
                 <a href="#skills" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Skills</a>
@@ -113,15 +107,14 @@
             <a href="./assets/resume.pdf" download="Kaustubh_Joshi_Resume.pdf" class="hidden md:inline-block px-5 py-2 border border-custom-teal text-custom-teal rounded-full hover:bg-custom-teal hover:text-black transition-all duration-300 font-medium">
                 Resume
             </a>
-            <!-- Fix (UI/UX): Added mobile menu button -->
             <button id="mobile-menu-button" class="md:hidden text-white rounded" aria-label="Open menu" aria-expanded="false">
                 <i data-lucide="menu"></i>
             </button>
         </div>
-        <!-- Fix (UI/UX): Added mobile menu container -->
         <div id="mobile-menu" class="hidden md:hidden bg-black/80 backdrop-blur-lg">
             <a href="#about" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">About</a>
             <a href="#projects" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Projects</a>
+            <a href="#gameplay" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Gameplay</a>
             <a href="#ai-architect" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">AI Architect</a>
             <a href="#automation" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Automation</a>
             <a href="#skills" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Skills</a>
@@ -140,7 +133,7 @@
                     Kaustubh Joshi
                 </h1>
                 <p class="mt-4 text-xl md:text-2xl text-gray-300">
-                    Architect of Assured Realities
+                    Quality Engineer
                 </p>
                 <a href="#projects" class="mt-8 inline-block px-10 py-4 bg-custom-teal text-black font-bold rounded-full hover:bg-white transition-colors duration-300 teal-glow">
                     View My Work
@@ -153,13 +146,13 @@
             <div class="container mx-auto px-6 md:px-12 lg:w-2/3 text-center">
                 <h2 class="text-4xl font-bold font-grotesk mb-8 text-white">About Me</h2>
                 <p class="text-lg text-gray-300 leading-relaxed mb-6">
-                    I am a technology professional with over four years of experience specializing in Quality Assurance and the development of immersive AR/VR applications. My journey began with a comprehensive education in Game Design and Development, which provided me with a strong foundation in creating engaging interactive systems.
+                    I am a Quality Engineer with over three years of experience, specializing in game testing and automation scripting for AAA titles. My expertise lies in developing robust test frameworks and enhancing test efficiency to minimize manual processes and ensure high-quality releases.
                 </p>
                 <p class="text-lg text-gray-300 leading-relaxed mb-6">
-                    I translated this foundation into practical experience as a Unity Developer, contributing to a complex "Science Simulations" project that involved 2D/3D modeling, multiplayer functionality, and AR/VR integration. This role honed my ability to transform design specifications into functional, user-facing products.
+                    In my current role at Ubisoft, I conduct end-to-end testing for major HD games, where I've developed automation processes that reduced manual testing time by 40%. My work involves creating and optimizing test cases using frameworks like DTest and ensuring game stability by identifying and resolving critical issues.
                 </p>
                 <p class="text-lg text-gray-300 leading-relaxed">
-                    To deepen the impact of my work, I studied Social Psychology to better understand the human side of technology. This unique perspective, combined with a robust background in QA and core programming principles in languages like Java, enables me to architect and deliver experiences that are not only technically sound but also intuitive and psychologically engaging.
+                    My foundation in quality is built upon hands-on development experience as a Unity Game Developer. This background in creating game logic, multiplayer functionality, and AR/VR simulations gives me a deep understanding of the entire development lifecycle, allowing me to architect more effective and insightful testing solutions.
                 </p>
             </div>
         </section>
@@ -171,45 +164,58 @@
                     <h2 class="text-4xl font-bold font-grotesk text-white">Project Showcase</h2>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Fix (UI/UX): Added micro-interaction on hover -->
                     <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 group transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-2xl font-bold text-custom-teal mb-3">Science Simulations (Internship)</h3>
-                        <p class="text-gray-300 mb-4">An interactive educational platform built in Unity to demonstrate complex scientific concepts, featuring 2D/3D models, multiplayer modes, and AR/VR integration.</p>
-                        <div class="mb-4">
-                            <h4 class="font-semibold text-white mb-2">My Role:</h4>
-                            <p class="text-gray-400 text-sm">As a Unity Development Intern, I was responsible for designing layouts and implementing core functionality based on design briefs, with a focus on creating interactive models and ensuring a seamless user experience.</p>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Unity</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">C#</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">AR/VR</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Multiplayer</span>
+                        <h3 class="text-2xl font-bold text-custom-teal mb-3">AAA Title Porting Project (Ubisoft)</h3>
+                        <p class="text-gray-300 mb-4">Conducted comprehensive end-to-end testing of a major PS5 game ported to iOS, completing full gameplay testing within 19 hours post-launch to ensure a stable and successful release.</p>
+                        <div class="flex flex-wrap gap-2 mt-12">
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Game Testing</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">iOS</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">PS5</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Jira</span>
                         </div>
                     </div>
                     <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 group transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-2xl font-bold text-custom-teal mb-3">GenAI Bug Summarizer</h3>
-                        <p class="text-gray-300 mb-4">A command-line tool that uses a large language model to automatically summarize complex bug reports from Jira into concise, actionable insights for developers.</p>
+                        <h3 class="text-2xl font-bold text-custom-teal mb-3">Game Automation Framework</h3>
+                        <p class="text-gray-300 mb-4">Designed a modular automation framework for Unity-based games to validate gameplay mechanics and UI. Integrated with Jenkins for CI/CD, reducing manual regression testing by 50%.</p>
                         <div class="flex flex-wrap gap-2 mt-12">
                             <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Python</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">GenAI</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">CLI</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Unity Test Framework</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Jenkins</span>
                         </div>
                     </div>
                     <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 group transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-2xl font-bold text-custom-teal mb-3">Postman API Test Suite</h3>
-                        <p class="text-gray-300 mb-4">A comprehensive collection of API tests for a RESTful service, including contract, integration, and end-to-end tests run via Newman CLI in a CI/CD pipeline.</p>
+                        <h3 class="text-2xl font-bold text-custom-teal mb-3">API Test Suite for Multiplayer Backend</h3>
+                        <p class="text-gray-300 mb-4">Built a reusable API test suite using REST-assured to validate backend services for multiplayer features. Detected over 30 critical backend issues pre-release through CI-integrated pipelines.</p>
                         <div class="flex flex-wrap gap-2 mt-12">
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Java</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">REST-assured</span>
                             <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Postman</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">JavaScript</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">CI/CD</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Gameplay Demo Section -->
+        <section id="gameplay" class="py-20 md:py-32 bg-[#0A0A0A]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold font-grotesk text-white">Gameplay Demo</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">This video showcases gameplay from one of my Unity projects, demonstrating the final user experience, fluidity of controls, and overall game feel.</p>
+                </div>
+                <div class="max-w-4xl mx-auto rounded-lg overflow-hidden border-2 border-gray-800 shadow-2xl">
+                    <div class="aspect-w-16 aspect-h-9">
+                        <video controls class="w-full h-full">
+                            <source src="./assets/Porfolio.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- AI Test Case Architect Section -->
-        <section id="ai-architect" class="py-20 md:py-32 bg-[#0A0A0A]">
+        <section id="ai-architect" class="py-20 md:py-32 bg-black">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold font-grotesk text-white">AI Test Case Architect</h2>
@@ -252,7 +258,7 @@
         </section>
 
         <!-- Automation in Action Section -->
-        <section id="automation" class="py-20 md:py-32 bg-black">
+        <section id="automation" class="py-20 md:py-32 bg-[#0A0A0A]">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-4xl font-bold font-grotesk text-white">Live Automation Auditor</h2>
@@ -279,34 +285,34 @@
         </section>
 
         <!-- Skills Matrix Section -->
-        <section id="skills" class="py-20 md:py-32 bg-[#0A0A0A]">
+        <section id="skills" class="py-20 md:py-32 bg-black">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold font-grotesk text-white">Skills & Expertise</h2>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     <div>
-                        <h3 class="text-xl font-bold text-custom-teal mb-4">AR/VR Development</h3>
-                        <ul class="space-y-2 text-gray-400"><li>Unity Engine</li><li>C# Programming</li><li>Oculus SDK</li><li>AR Foundation</li></ul>
+                        <h3 class="text-xl font-bold text-custom-teal mb-4">Game Testing & Tools</h3>
+                        <ul class="space-y-2 text-gray-400"><li>DTest Framework</li><li>Domino</li><li>Unity Test Framework</li><li>Console (PS5) & PC</li></ul>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-custom-teal mb-4">QA & Automation</h3>
-                        <ul class="space-y-2 text-gray-400"><li>Selenium</li><li>TestNG</li><li>Manual Testing</li><li>API Testing (Postman)</li></ul>
+                        <h3 class="text-xl font-bold text-custom-teal mb-4">Web & Mobile Automation</h3>
+                        <ul class="space-y-2 text-gray-400"><li>Selenium</li><li>Appium</li><li>REST-assured</li><li>Postman</li></ul>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-custom-teal mb-4">AI & Machine Learning</h3>
-                        <ul class="space-y-2 text-gray-400"><li>Python</li><li>GenAI Tooling</li><li>Prompt Engineering</li><li>Jupyter</li></ul>
+                        <h3 class="text-xl font-bold text-custom-teal mb-4">Programming & Scripting</h3>
+                        <ul class="space-y-2 text-gray-400"><li>C++</li><li>Java</li><li>Python</li><li>Scripting & Data Structures</li></ul>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-custom-teal mb-4">Core Technologies</h3>
-                        <ul class="space-y-2 text-gray-400"><li>Java</li><li>Git & GitHub</li><li>HTML/CSS</li><li>JavaScript</li></ul>
+                        <h3 class="text-xl font-bold text-custom-teal mb-4">Platforms & DevOps</h3>
+                        <ul class="space-y-2 text-gray-400"><li>Android & iOS</li><li>Jenkins</li><li>Git & GitHub Actions</li><li>Jira & Confluence</li></ul>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Credentials Section -->
-        <section id="credentials" class="py-20 md:py-32 bg-black">
+        <section id="credentials" class="py-20 md:py-32 bg-[#0A0A0A]">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold font-grotesk text-white">Credentials & Experience</h2>
@@ -349,7 +355,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 md:py-32 bg-[#0A0A0A]">
+        <section id="contact" class="py-20 md:py-32 bg-black">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-4xl font-bold font-grotesk text-white">Get In Touch</h2>
                 <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">I'm currently open to new opportunities and collaborations. If you have a project in mind or would like to connect, please feel free to reach out.</p>
@@ -375,7 +381,7 @@
         </section>
     </main>
 
-    <footer class="bg-black py-12">
+    <footer class="bg-[#0A0A0A] py-12">
         <div class="container mx-auto px-6 text-center text-gray-500">
             <div class="flex justify-center space-x-6 mb-6">
                 <a href="#" class="hover:text-custom-teal transition-colors rounded" aria-label="GitHub Profile"><i data-lucide="github" class="w-6 h-6"></i></a>
@@ -634,47 +640,6 @@
                 });
             }
             form.addEventListener("submit", handleFormSubmit);
-
-            // --- 3D Background Logic ---
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-canvas') });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.position.setZ(5);
-            const starGeometry = new THREE.BufferGeometry();
-            const starCount = 2500;
-            const posArray = new Float32Array(starCount * 3);
-            for (let i = 0; i < starCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 10;
-            }
-            starGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const starMaterial = new THREE.PointsMaterial({ size: 0.005, color: 0x00F5D4 });
-            const starMesh = new THREE.Points(starGeometry, starMaterial);
-            scene.add(starMesh);
-            let mouseX = 0;
-            let mouseY = 0;
-            document.addEventListener('mousemove', (event) => {
-                mouseX = event.clientX;
-                mouseY = event.clientY;
-            });
-            const clock = new THREE.Clock();
-            const animate = () => {
-                const elapsedTime = clock.getElapsedTime();
-                starMesh.rotation.y = elapsedTime * 0.1;
-                if (mouseX > 0) {
-                    starMesh.rotation.x = -mouseY * (elapsedTime * 0.00003);
-                    starMesh.rotation.y += (mouseX - window.innerWidth / 2) * 0.000005;
-                }
-                renderer.render(scene, camera);
-                window.requestAnimationFrame(animate);
-            };
-            animate();
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
 
             // Initial setup
             createOrUpdateChart([0,0,0,0], ['Performance', 'Accessibility', 'Best Practices', 'SEO']);
