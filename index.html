@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaustubh Joshi | Architect of Assured Realities</title>
     
+    <!-- Fix (SEO): Added meta description -->
+    <meta name="description" content="The professional portfolio for Kaustubh Joshi, an experienced QA Engineer and AR/VR Developer specializing in automation and AI-powered tools.">
+
     <!-- Strategy: This page implements the "Architect of Assured Realities" brand identity. -->
     <!-- UX/UI: Dark mode with a near-black (#0A0A0A) base and neon teal (#00F5D4) accent. -->
     <!-- Typography: Space Grotesk for headings, Inter for body text. -->
@@ -13,7 +16,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Fix (Performance): Added defer to all external scripts to prevent render-blocking -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
     <style>
         body {
@@ -25,26 +32,17 @@
         .font-grotesk {
             font-family: 'Space Grotesk', sans-serif;
         }
-        .bg-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -1;
-            transform: translateX(-50%) translateY(-50%);
-            object-fit: cover;
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Behind content */
         }
-        .section-fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .section-fade-in.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+        header, main, footer {
+            position: relative;
+            z-index: 10;
         }
         .teal-glow {
             box-shadow: 0 0 15px rgba(0, 245, 212, 0.3), 0 0 5px rgba(0, 245, 212, 0.2);
@@ -59,34 +57,73 @@
             outline-offset: 2px;
             border-radius: 2px;
         }
+        .nav-link.active {
+            color: #00F5D4;
+        }
+        .prompt-checkbox:checked + label {
+            background-color: #00F5D4;
+            color: #0A0A0A;
+            border-color: #00F5D4;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00F5D4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Fix (UI/UX): Blinking cursor for live log */
+        #live-log-cursor {
+            display: inline-block;
+            background-color: #EAEAEA;
+            width: 10px;
+            height: 1.2em;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { background-color: transparent }
+            50% { background-color: #EAEAEA; }
+        }
     </style>
 </head>
 <body class="antialiased">
+    
+    <canvas id="bg-canvas"></canvas>
 
     <!-- Header & Navigation -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md transition-all duration-300">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" class="text-3xl font-bold font-grotesk text-white tracking-tighter" aria-label="Home">
+            <a href="#hero" class="text-3xl font-bold font-grotesk text-white tracking-tighter" aria-label="Home">
                 KJ
             </a>
-            <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#about" class="text-gray-300 hover:text-custom-teal transition-colors rounded">About</a>
-                <a href="#projects" class="text-gray-300 hover:text-custom-teal transition-colors rounded">Projects</a>
-                <a href="#skills" class="text-gray-300 hover:text-custom-teal transition-colors rounded">Skills</a>
-                <a href="#credentials" class="text-gray-300 hover:text-custom-teal transition-colors rounded">Credentials</a>
-                <a href="#contact" class="text-gray-300 hover:text-custom-teal transition-colors rounded">Contact</a>
+            <nav id="main-nav" class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">About</a>
+                <a href="#projects" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Projects</a>
+                <a href="#ai-architect" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">AI Architect</a>
+                <a href="#automation" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Automation</a>
+                <a href="#skills" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Skills</a>
+                <a href="#credentials" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Credentials</a>
+                <a href="#contact" class="nav-link text-gray-300 hover:text-custom-teal transition-colors rounded">Contact</a>
             </nav>
             <a href="./assets/resume.pdf" download="Kaustubh_Joshi_Resume.pdf" class="hidden md:inline-block px-5 py-2 border border-custom-teal text-custom-teal rounded-full hover:bg-custom-teal hover:text-black transition-all duration-300 font-medium">
                 Resume
             </a>
+            <!-- Fix (UI/UX): Added mobile menu button -->
             <button id="mobile-menu-button" class="md:hidden text-white rounded" aria-label="Open menu" aria-expanded="false">
                 <i data-lucide="menu"></i>
             </button>
         </div>
-        <!-- Mobile Menu -->
+        <!-- Fix (UI/UX): Added mobile menu container -->
         <div id="mobile-menu" class="hidden md:hidden bg-black/80 backdrop-blur-lg">
             <a href="#about" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">About</a>
             <a href="#projects" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Projects</a>
+            <a href="#ai-architect" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">AI Architect</a>
+            <a href="#automation" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Automation</a>
             <a href="#skills" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Skills</a>
             <a href="#credentials" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Credentials</a>
             <a href="#contact" class="block text-center py-3 text-gray-300 hover:bg-custom-teal hover:text-black transition-colors">Contact</a>
@@ -94,14 +131,10 @@
         </div>
     </header>
 
-    <main class="relative z-10">
+    <main>
         <!-- Hero Section -->
-        <section id="hero" class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
-            <video autoplay loop muted playsinline class="bg-video">
-                <source src="./assets/Porfolio.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="absolute inset-0 bg-black/60"></div>
+        <section id="hero" class="h-screen flex items-center justify-center relative text-center text-white overflow-hidden">
+             <div class="absolute inset-0 bg-black/60 z-10"></div>
             <div class="relative z-20 p-8">
                 <h1 class="text-5xl md:text-7xl font-bold font-grotesk uppercase tracking-wider">
                     Kaustubh Joshi
@@ -116,7 +149,7 @@
         </section>
 
         <!-- About Me Section -->
-        <section id="about" class="py-20 md:py-32 bg-[#0A0A0A] section-fade-in">
+        <section id="about" class="py-20 md:py-32 bg-[#0A0A0A]">
             <div class="container mx-auto px-6 md:px-12 lg:w-2/3 text-center">
                 <h2 class="text-4xl font-bold font-grotesk mb-8 text-white">About Me</h2>
                 <p class="text-lg text-gray-300 leading-relaxed mb-6">
@@ -132,13 +165,14 @@
         </section>
 
         <!-- Project Showcase Section -->
-        <section id="projects" class="py-20 md:py-32 bg-black section-fade-in">
+        <section id="projects" class="py-20 md:py-32 bg-black">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold font-grotesk text-white">Project Showcase</h2>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+                    <!-- Fix (UI/UX): Added micro-interaction on hover -->
+                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 group transition-transform duration-300 hover:scale-105">
                         <h3 class="text-2xl font-bold text-custom-teal mb-3">Science Simulations (Internship)</h3>
                         <p class="text-gray-300 mb-4">An interactive educational platform built in Unity to demonstrate complex scientific concepts, featuring 2D/3D models, multiplayer modes, and AR/VR integration.</p>
                         <div class="mb-4">
@@ -152,8 +186,7 @@
                             <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Multiplayer</span>
                         </div>
                     </div>
-                    <!-- Placeholder for other projects -->
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 group transition-transform duration-300 hover:scale-105">
                         <h3 class="text-2xl font-bold text-custom-teal mb-3">GenAI Bug Summarizer</h3>
                         <p class="text-gray-300 mb-4">A command-line tool that uses a large language model to automatically summarize complex bug reports from Jira into concise, actionable insights for developers.</p>
                         <div class="flex flex-wrap gap-2 mt-12">
@@ -162,13 +195,83 @@
                             <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">CLI</span>
                         </div>
                     </div>
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                        <h3 class="text-2xl font-bold text-custom-teal mb-3">Selenium Test Automation Suite</h3>
-                        <p class="text-gray-300 mb-4">A comprehensive test automation framework for a web application, covering regression, smoke, and sanity testing scenarios, reducing manual testing time by 60%.</p>
+                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 group transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-2xl font-bold text-custom-teal mb-3">Postman API Test Suite</h3>
+                        <p class="text-gray-300 mb-4">A comprehensive collection of API tests for a RESTful service, including contract, integration, and end-to-end tests run via Newman CLI in a CI/CD pipeline.</p>
                         <div class="flex flex-wrap gap-2 mt-12">
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Selenium</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Java</span>
-                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">TestNG</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">Postman</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">JavaScript</span>
+                            <span class="bg-gray-700 text-custom-teal text-xs font-medium px-3 py-1 rounded-full">CI/CD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Test Case Architect Section -->
+        <section id="ai-architect" class="py-20 md:py-32 bg-[#0A0A0A]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold font-grotesk text-white">AI Test Case Architect</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">This is a live demonstration of how I leverage AI to accelerate the QA process. Describe a software feature, select from the QA strategies below, and the tool will generate a professional set of test cases.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-gray-900/50 border border-gray-800 rounded-lg p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <label for="feature-input" class="block text-lg font-semibold text-gray-300 mb-2">1. Describe a Software Feature</label>
+                            <input type="text" id="feature-input" placeholder="e.g., a user login form with a 'remember me' checkbox" class="w-full bg-gray-800 border border-gray-700 rounded-md py-3 px-4 text-white" maxlength="500">
+                            <p id="feature-error" class="text-red-500 text-sm mt-2 hidden">Please describe a software feature.</p>
+                            <h3 class="text-lg font-semibold text-gray-300 mt-6 mb-3">2. Select QA Strategies</h3>
+                            <div class="flex flex-wrap gap-3">
+                                <input type="checkbox" id="negative-check" class="hidden prompt-checkbox">
+                                <label for="negative-check" class="cursor-pointer border-2 border-gray-600 px-4 py-2 rounded-full text-sm hover:border-custom-teal transition-colors">Generate Negative Scenarios</label>
+                                <input type="checkbox" id="edge-case-check" class="hidden prompt-checkbox">
+                                <label for="edge-case-check" class="cursor-pointer border-2 border-gray-600 px-4 py-2 rounded-full text-sm hover:border-custom-teal transition-colors">Include Edge Cases</label>
+                            </div>
+                            <button id="generate-btn" class="mt-8 w-full px-10 py-4 bg-custom-teal text-black font-bold rounded-full hover:bg-white transition-colors duration-300 teal-glow">
+                                Generate Test Cases
+                            </button>
+                        </div>
+                        <div class="bg-gray-800/50 p-6 rounded-lg">
+                            <div id="loader" class="hidden justify-center items-center h-full">
+                                <div class="loader"></div>
+                            </div>
+                            <div id="results-content">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-semibold text-custom-teal">Generated Test Cases:</h3>
+                                    <button id="copy-btn" class="text-gray-400 hover:text-white rounded" aria-label="Copy to clipboard">
+                                        <i data-lucide="copy" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                                <div id="ai-response" class="text-sm text-gray-300 bg-gray-900 p-3 rounded-md h-64 overflow-y-auto">The AI's response will appear here...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Automation in Action Section -->
+        <section id="automation" class="py-20 md:py-32 bg-black">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold font-grotesk text-white">Live Automation Auditor</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">This tool provides a live demonstration of automation. Enter any public URL to simulate a QA audit. The system will generate a realistic test log and a dashboard with key performance and accessibility metrics.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-gray-900/50 border border-gray-800 rounded-lg p-8">
+                    <div class="flex flex-col md:flex-row gap-4 mb-6">
+                        <input type="url" id="url-input" placeholder="Enter a URL to audit (e.g., https://google.com)" class="flex-grow bg-gray-800 border border-gray-700 rounded-md py-3 px-4 text-white">
+                        <button id="audit-button" class="px-8 py-3 bg-custom-teal text-black font-bold rounded-md hover:bg-white transition-colors duration-300">
+                            Run Audit
+                        </button>
+                    </div>
+                    <p id="audit-error" class="text-red-500 text-sm -mt-4 mb-4 hidden">Please enter a valid URL.</p>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="bg-gray-800/50 p-4 rounded-lg h-80 overflow-y-auto">
+                            <p id="live-log" class="text-sm text-gray-400 font-mono whitespace-pre-wrap">Awaiting URL to begin audit...<span id="live-log-cursor"></span></p>
+                        </div>
+                        <div class="relative h-64 md:h-80">
+                            <canvas id="automationChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -176,7 +279,7 @@
         </section>
 
         <!-- Skills Matrix Section -->
-        <section id="skills" class="py-20 md:py-32 bg-[#0A0A0A] section-fade-in">
+        <section id="skills" class="py-20 md:py-32 bg-[#0A0A0A]">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold font-grotesk text-white">Skills & Expertise</h2>
@@ -203,13 +306,13 @@
         </section>
 
         <!-- Credentials Section -->
-        <section id="credentials" class="py-20 md:py-32 bg-black section-fade-in">
+        <section id="credentials" class="py-20 md:py-32 bg-black">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl font-bold font-grotesk text-white">Credentials & Experience</h2>
                 </div>
                 <div class="space-y-8 max-w-4xl mx-auto">
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 flex justify-between items-center">
+                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 flex justify-between items-center group transition-transform duration-300 hover:scale-105">
                         <div>
                             <h3 class="text-xl font-bold text-white">Unity Developer (Internship)</h3>
                             <p class="text-gray-400 mt-1">Ceryx Digital Private Limited</p>
@@ -217,7 +320,7 @@
                         </div>
                         <a href="./assets/Internship Certificate.pdf" target="_blank" class="text-gray-400 hover:text-custom-teal transition-colors" aria-label="View Certificate"><i data-lucide="external-link"></i></a>
                     </div>
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 flex justify-between items-center">
+                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 flex justify-between items-center group transition-transform duration-300 hover:scale-105">
                         <div>
                             <h3 class="text-xl font-bold text-white">Game Design & Development</h3>
                             <p class="text-gray-400 mt-1">Anibrain School of Media & Design</p>
@@ -225,7 +328,7 @@
                         </div>
                         <a href="./assets/Anibrain school of media and design certificate of game design and development.pdf" target="_blank" class="text-gray-400 hover:text-custom-teal transition-colors" aria-label="View Certificate"><i data-lucide="external-link"></i></a>
                     </div>
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 flex justify-between items-center">
+                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 flex justify-between items-center group transition-transform duration-300 hover:scale-105">
                         <div>
                             <h3 class="text-xl font-bold text-white">The Complete Java Certification</h3>
                             <p class="text-gray-400 mt-1">Udemy</p>
@@ -233,7 +336,7 @@
                         </div>
                         <a href="./assets/The Complete Java Certification Course.pdf" target="_blank" class="text-gray-400 hover:text-custom-teal transition-colors" aria-label="View Certificate"><i data-lucide="external-link"></i></a>
                     </div>
-                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 flex justify-between items-center">
+                    <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800 flex justify-between items-center group transition-transform duration-300 hover:scale-105">
                         <div>
                             <h3 class="text-xl font-bold text-white">Learn Social Psychology Fundamentals</h3>
                             <p class="text-gray-400 mt-1">Udemy</p>
@@ -246,13 +349,13 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 md:py-32 bg-[#0A0A0A] section-fade-in">
+        <section id="contact" class="py-20 md:py-32 bg-[#0A0A0A]">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-4xl font-bold font-grotesk text-white">Get In Touch</h2>
                 <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">I'm currently open to new opportunities and collaborations. If you have a project in mind or would like to connect, please feel free to reach out.</p>
                 
                 <div class="mt-12 max-w-lg mx-auto">
-                    <form id="contact-form" action="https://formspree.io/f/your_form_id" method="POST" class="space-y-4">
+                    <form id="contact-form" action="https://formspree.io/f/xzzvvaoy" method="POST" class="space-y-4">
                         <div>
                             <input type="text" name="name" placeholder="Your Name" class="w-full bg-gray-900 border border-gray-700 rounded-md py-3 px-4 text-white" required>
                         </div>
@@ -272,7 +375,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-black py-12">
         <div class="container mx-auto px-6 text-center text-gray-500">
             <div class="flex justify-center space-x-6 mb-6">
@@ -285,77 +387,298 @@
     </footer>
 
     <script>
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
 
-        // --- Mobile Menu Logic ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        function toggleMenu() {
-            const isHidden = mobileMenu.classList.contains('hidden');
-            mobileMenu.classList.toggle('hidden');
-            mobileMenuButton.setAttribute('aria-expanded', !isHidden);
-        }
-
-        mobileMenuButton.addEventListener('click', toggleMenu);
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', toggleMenu);
-        });
-
-        // --- Header scroll effect ---
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('py-2');
-                header.classList.remove('py-3');
-            } else {
-                header.classList.add('py-3');
-                header.classList.remove('py-2');
+            // --- Mobile Menu Logic ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            function toggleMenu() {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', !isHidden);
             }
-        });
 
-        // --- Section fade-in on scroll ---
-        const sections = document.querySelectorAll('.section-fade-in');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
+            mobileMenuButton.addEventListener('click', toggleMenu);
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', toggleMenu);
             });
-        }, { threshold: 0.1 });
-        sections.forEach(section => observer.observe(section));
 
-        // --- Contact Form ---
-        const form = document.getElementById('contact-form');
-        const formStatus = document.getElementById('form-status');
-        async function handleFormSubmit(event) {
-            event.preventDefault();
-            const data = new FormData(event.target);
-            fetch(event.target.action, {
-                method: form.method,
-                body: data,
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    formStatus.textContent = "Thanks for your submission!";
-                    formStatus.className = 'mt-4 text-sm text-green-500';
-                    form.reset();
+            // --- Active Nav Link Highlighting on Scroll ---
+            const sections = document.querySelectorAll('main section');
+            const navLinks = document.querySelectorAll('#main-nav a.nav-link');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => observer.observe(section));
+
+            // --- AI Test Case Architect Logic ---
+            const generateBtn = document.getElementById('generate-btn');
+            const featureInput = document.getElementById('feature-input');
+            const featureError = document.getElementById('feature-error');
+            const negativeCheck = document.getElementById('negative-check');
+            const edgeCaseCheck = document.getElementById('edge-case-check');
+            const aiResponseEl = document.getElementById('ai-response');
+            const loaderEl = document.getElementById('loader');
+            const resultsContentEl = document.getElementById('results-content');
+            const copyBtn = document.getElementById('copy-btn');
+
+            function debounce(func, delay) {
+                let timeout;
+                return function(...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), delay);
+                };
+            }
+
+            const handleGenerateClick = async () => {
+                const featureDescription = featureInput.value;
+                if (!featureDescription.trim()) {
+                    featureError.classList.remove('hidden');
+                    return;
+                }
+                featureError.classList.add('hidden');
+                
+                let engineeredPrompt = `Act as a senior QA engineer. Your task is to generate a comprehensive set of test cases for the following software feature: "${featureDescription}".\n\n`;
+                engineeredPrompt += "The test cases should be clear, concise, and easy to execute. Provide a mix of positive and functional tests.\n";
+                if (negativeCheck.checked) engineeredPrompt += "In addition, include a section for 'Negative Scenarios' that test for invalid inputs and error handling.\n";
+                if (edgeCaseCheck.checked) engineeredPrompt += "Also include a section for 'Edge Cases' that test the boundaries and unusual conditions of the feature.\n";
+                engineeredPrompt += "Format the output as clean, bulleted lists for each category of test cases.";
+
+                loaderEl.style.display = 'flex';
+                resultsContentEl.style.display = 'none';
+                aiResponseEl.innerHTML = '';
+
+                try {
+                    let chatHistory = [{ role: "user", parts: [{ text: engineeredPrompt }] }];
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // API key is handled by the environment
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                    const result = await response.json();
+                    
+                    if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        aiResponseEl.innerHTML = text
+                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                            .replace(/\n/g, '<br>')
+                            .replace(/(\*|-)\s(.*?)(<br>|$)/g, '<ul><li class="ml-4 list-disc">$2</li></ul>')
+                            .replace(/<\/ul><br><ul>/g, '');
+                    } else {
+                        throw new Error("Unexpected API response format.");
+                    }
+                } catch (error) {
+                    console.error("Error calling Gemini API:", error);
+                    aiResponseEl.textContent = `An error occurred: ${error.message}. Please try again later.`;
+                } finally {
+                    loaderEl.style.display = 'none';
+                    resultsContentEl.style.display = 'block';
+                    lucide.createIcons();
+                }
+            };
+
+            generateBtn.addEventListener('click', debounce(handleGenerateClick, 1000));
+
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(aiResponseEl.innerText);
+                copyBtn.innerHTML = '<i data-lucide="check" class="w-5 h-5 text-green-500"></i>';
+                lucide.createIcons();
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i data-lucide="copy" class="w-5 h-5"></i>';
+                    lucide.createIcons();
+                }, 2000);
+            });
+
+
+            // --- Automation Chart & Live Auditor Logic ---
+            const ctx = document.getElementById('automationChart').getContext('2d');
+            const liveLog = document.getElementById('live-log');
+            const auditButton = document.getElementById('audit-button');
+            const urlInput = document.getElementById('url-input');
+            const auditError = document.getElementById('audit-error');
+            let automationChart;
+
+            function createOrUpdateChart(data, labels) {
+                 if (automationChart) {
+                    automationChart.data.datasets[0].data = data;
+                    automationChart.data.labels = labels;
+                    automationChart.update();
                 } else {
-                    response.json().then(data => {
-                        if (Object.hasOwn(data, 'errors')) {
-                            formStatus.textContent = data["errors"].map(error => error["message"]).join(", ");
-                        } else {
-                            formStatus.textContent = "Oops! There was a problem submitting your form";
+                    automationChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: data,
+                                backgroundColor: ['#2DD4BF', '#FBBF24', '#F87171', '#60A5FA'],
+                                borderColor: '#0A0A0A',
+                                borderWidth: 4,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '70%',
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return `${context.label}: ${Math.round(context.raw * 100)}`;
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        formStatus.className = 'mt-4 text-sm text-red-500';
-                    })
+                    });
                 }
-            }).catch(error => {
-                formStatus.textContent = "Oops! There was a problem submitting your form";
-                formStatus.className = 'mt-4 text-sm text-red-500';
+            }
+            
+            async function typeLog(message, delay = 50) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        liveLog.innerHTML = liveLog.innerHTML.replace(/<span id="live-log-cursor"><\/span>/, ''); // Remove cursor
+                        liveLog.innerHTML += message + '\n<span id="live-log-cursor"></span>';
+                        liveLog.scrollTop = liveLog.scrollHeight;
+                        resolve();
+                    }, delay);
+                });
+            }
+
+            auditButton.addEventListener('click', async () => {
+                const urlToAudit = urlInput.value;
+                 // Fix (Edge Case): Improved URL validation with RegEx
+                const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+                if (!urlToAudit || !urlRegex.test(urlToAudit)) {
+                    auditError.classList.remove('hidden');
+                    return;
+                }
+                auditError.classList.add('hidden');
+
+                liveLog.innerHTML = '<span id="live-log-cursor"></span>';
+                auditButton.disabled = true;
+                auditButton.innerText = 'Auditing...';
+                createOrUpdateChart([0,0,0,0], ['Performance', 'Accessibility', 'Best Practices', 'SEO']);
+
+                await typeLog('[INFO] Initializing WebDriver...');
+                await typeLog(`[INFO] Navigating to ${urlToAudit}`);
+                await typeLog('[TEST] Verifying page title exists...');
+                await typeLog('[PASS] Page title found.');
+                await typeLog('[TEST] Checking for broken links (404s)...');
+                await typeLog('[PASS] Found 127 valid links.');
+                await typeLog('[TEST] Verifying accessibility compliance (WCAG 2.1 AA)...');
+                await typeLog('[WARN] 3 low-contrast elements found.');
+                await typeLog('[INFO] Executing performance audit...');
+                await typeLog('[INFO] Audit complete. Generating report...');
+                
+                const performance = Math.random() * (0.98 - 0.75) + 0.75;
+                const accessibility = Math.random() * (0.99 - 0.80) + 0.80;
+                const bestPractices = Math.random() * (0.95 - 0.70) + 0.70;
+                const seo = Math.random() * (1.0 - 0.85) + 0.85;
+
+                await typeLog(`\n> Performance Score: ${Math.round(performance*100)}`);
+                await typeLog(`> Accessibility Score: ${Math.round(accessibility*100)}`);
+                await typeLog(`> Best Practices Score: ${Math.round(bestPractices*100)}`);
+                await typeLog(`> SEO Score: ${Math.round(seo*100)}`);
+                await typeLog('\n> Dashboard updated.');
+
+                createOrUpdateChart(
+                    [performance, accessibility, bestPractices, seo],
+                    ['Performance', 'Accessibility', 'Best Practices', 'SEO']
+                );
+
+                auditButton.disabled = false;
+                auditButton.innerText = 'Run Audit';
             });
-        }
-        form.addEventListener("submit", handleFormSubmit)
+
+            // --- Contact Form ---
+            const form = document.getElementById('contact-form');
+            const formStatus = document.getElementById('form-status');
+            async function handleFormSubmit(event) {
+                event.preventDefault();
+                const data = new FormData(event.target);
+                fetch(event.target.action, {
+                    method: form.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                }).then(response => {
+                    if (response.ok) {
+                        formStatus.textContent = "Thanks for your submission!";
+                        formStatus.className = 'mt-4 text-sm text-green-500';
+                        form.reset();
+                    } else {
+                        response.json().then(data => {
+                            formStatus.textContent = data.errors ? data.errors.map(e => e.message).join(", ") : "Oops! There was a problem.";
+                            formStatus.className = 'mt-4 text-sm text-red-500';
+                        })
+                    }
+                }).catch(error => {
+                    formStatus.textContent = "Oops! There was a problem submitting your form";
+                    formStatus.className = 'mt-4 text-sm text-red-500';
+                });
+            }
+            form.addEventListener("submit", handleFormSubmit);
+
+            // --- 3D Background Logic ---
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-canvas') });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.position.setZ(5);
+            const starGeometry = new THREE.BufferGeometry();
+            const starCount = 2500;
+            const posArray = new Float32Array(starCount * 3);
+            for (let i = 0; i < starCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const starMaterial = new THREE.PointsMaterial({ size: 0.005, color: 0x00F5D4 });
+            const starMesh = new THREE.Points(starGeometry, starMaterial);
+            scene.add(starMesh);
+            let mouseX = 0;
+            let mouseY = 0;
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+            const clock = new THREE.Clock();
+            const animate = () => {
+                const elapsedTime = clock.getElapsedTime();
+                starMesh.rotation.y = elapsedTime * 0.1;
+                if (mouseX > 0) {
+                    starMesh.rotation.x = -mouseY * (elapsedTime * 0.00003);
+                    starMesh.rotation.y += (mouseX - window.innerWidth / 2) * 0.000005;
+                }
+                renderer.render(scene, camera);
+                window.requestAnimationFrame(animate);
+            };
+            animate();
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Initial setup
+            createOrUpdateChart([0,0,0,0], ['Performance', 'Accessibility', 'Best Practices', 'SEO']);
+        });
     </script>
 
 </body>
